@@ -1,0 +1,26 @@
+body {
+  text-align: center;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+.app {
+  height: 100vh;
+}
+
+.app--work {
+  background-color: #228B22;
+  color: #ffffff;
+}
+
+.app--break {
+  background-color: #800020;
+  color: #ffffff;
+}
+
+.app--rest {
+  background-color: #191970;
+  color: #ffffff;
+}
