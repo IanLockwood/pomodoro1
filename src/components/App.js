@@ -17,10 +17,13 @@ class App extends Component {
       restLength: 1,
       timeRemaining: 0,
       sprintsRemaining: 4,
-      cycleType: ''
+      cycleType: '',
+      intervalId: null
     }
 
     this.startTimer = this.startTimer.bind(this);
+    this.pauseTimer = this.pauseTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
   }
 
   switchToWork() {
@@ -61,31 +64,38 @@ class App extends Component {
   }
 
   timerInterval = () => {
-    setInterval(
-      () => {
-        if (this.state.timeRemaining === 0) {
-          this.switchCycle();
-        } else {
-          // count down timer
-          this.setState(prevState => (
-            {timeRemaining: prevState.timeRemaining - 1}
-          ));
-        }
-      }, 1000);
+    if (this.state.timeRemaining === 0) {
+      this.switchCycle();
+    } else {
+      // count down timer
+      this.setState(prevState => (
+        {timeRemaining: prevState.timeRemaining - 1}
+      ));
+    }
   }
 
   startTimer() {
     const timerJustStarted = this.state.numberOfSprints === this.state.sprintsRemaining
     if (timerJustStarted) {
       this.switchToWork();
-      console.log(timerJustStarted);
     }
-    this.timerInterval();
-    console.log(timerJustStarted);
+    this.setState({
+      intervalId: window.setInterval(this.timerInterval, 1000)
+    });
   }
 
   pauseTimer() {
-    clearInterval(this.intervalId);
+    clearInterval(this.state.intervalId);
+  }
+
+  stopTimer() {
+    clearInterval(this.state.intervalId);
+    this.setState({
+      timeRemaining: 0,
+      sprintsRemaining: this.state.numberOfSprints,
+      cycleType: '',
+      intervalId: null
+    })
   }
 
   render() {
@@ -94,7 +104,7 @@ class App extends Component {
         <Timer timeRemaining={this.state.timeRemaining} cycleType={this.state.cycleType} numberOfSprints={this.state.numberOfSprints} sprintsRemaining={this.state.sprintsRemaining} />
         <StartButton startTimer={this.startTimer} />
         <PauseButton pauseTimer={this.pauseTimer} />
-        <StopButton />
+        <StopButton stopTimer={this.stopTimer}/>
       </div>
     );
   }
