@@ -102,6 +102,7 @@ class App extends Component {
     return (
       <div className={"app app--" + this.state.cycleType}>
         <Timer timeRemaining={this.state.timeRemaining} cycleType={this.state.cycleType} numberOfSprints={this.state.numberOfSprints} sprintsRemaining={this.state.sprintsRemaining} />
+        <TimerForm />
         <StartButton startTimer={this.startTimer} />
         <PauseButton pauseTimer={this.pauseTimer} />
         <StopButton stopTimer={this.stopTimer}/>
