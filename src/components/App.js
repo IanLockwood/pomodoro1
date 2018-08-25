@@ -12,14 +12,19 @@ class App extends Component {
 
     this.state = {
       numberOfSprints: 4,
-      sprintLength: 1,
-      breakLength: 1,
-      restLength: 1,
+      sprintLength: 0.05,
+      breakLength: 0.05,
+      restLength: 0.05,
       timeRemaining: 0,
       sprintsRemaining: 4,
       cycleType: '',
       intervalId: null
     }
+
+    this.customizeNumberOfSprints = this.customizeNumberOfSprints.bind(this);
+    this.customizeSprintLength = this.customizeSprintLength.bind(this);
+    this.customizeBreakLength = this.customizeBreakLength.bind(this);
+    this.customizeRestLength = this.customizeRestLength.bind(this);
 
     this.startTimer = this.startTimer.bind(this);
     this.pauseTimer = this.pauseTimer.bind(this);
@@ -48,6 +53,7 @@ class App extends Component {
       sprintsRemaining: this.state.numberOfSprints
     })
   }
+
   switchCycle() {
     const sprintDidFinish = this.state.sprintsRemaining === 0;
     const workIsOver = this.state.cycleType === 'work';
@@ -64,6 +70,7 @@ class App extends Component {
   }
 
   timerInterval = () => {
+    console.log(this.state.numberOfSprints)
     if (this.state.timeRemaining === 0) {
       this.switchCycle();
     } else {
@@ -72,6 +79,31 @@ class App extends Component {
         {timeRemaining: prevState.timeRemaining - 1}
       ));
     }
+  }
+
+  customizeNumberOfSprints(customNumberOfSprints) {
+    this.setState({
+      numberOfSprints: customNumberOfSprints,
+      sprintsRemaining: customNumberOfSprints,
+    })
+  }
+
+  customizeSprintLength(customSprintLength) {
+    this.setState({
+      sprintLength: customSprintLength
+    })
+  }
+
+  customizeBreakLength(customBreakLength) {
+    this.setState({
+      breakLength: customBreakLength,
+    })
+  }
+
+  customizeRestLength(customRestLength) {
+    this.setState({
+      restLength: customRestLength
+    })
   }
 
   startTimer() {
@@ -101,8 +133,19 @@ class App extends Component {
   render() {
     return (
       <div className={"app app--" + this.state.cycleType}>
-        <Timer timeRemaining={this.state.timeRemaining} cycleType={this.state.cycleType} numberOfSprints={this.state.numberOfSprints} sprintsRemaining={this.state.sprintsRemaining} />
-        <TimerForm />
+        <Timer timeRemaining={this.state.timeRemaining}
+          cycleType={this.state.cycleType}
+          numberOfSprints={this.state.numberOfSprints}
+          sprintsRemaining={this.state.sprintsRemaining}
+        />
+
+        <TimerForm
+          customizeNumberOfSprints={this.customizeNumberOfSprints}
+          customizeSprintLength={this.customizeSprintLength}
+          customizeBreakLength={this.customizeBreakLength}
+          customizeRestLength={this.customizeRestLength}
+        />
+
         <StartButton startTimer={this.startTimer} />
         <PauseButton pauseTimer={this.pauseTimer} />
         <StopButton stopTimer={this.stopTimer}/>
