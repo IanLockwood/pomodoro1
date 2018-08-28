@@ -1,5 +1,5 @@
 html {
- font-size: 11px;
+ font-size: 12px;
  height: 100%;
 }
 
@@ -15,7 +15,7 @@ body {
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .app {
@@ -23,19 +23,28 @@ h1 {
   padding: 0 2rem;
 }
 
+.app--work,
+.app--break,
+.app--rest {
+  color: #ffffff;
+}
+
+.app--work a,
+.app--break a,
+.app--rest a {
+  color: #ffffff;
+}
+
 .app--work {
   background-color: #228B22;
-  color: #ffffff;
 }
 
 .app--break {
-  background-color: #800020;
-  color: #ffffff;
+  background-color: #6699cc;
 }
 
 .app--rest {
-  background-color: #191970;
-  color: #ffffff;
+  background-color: #336699;
 }
 
 .app--paused {

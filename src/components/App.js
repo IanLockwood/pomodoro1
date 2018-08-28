@@ -110,7 +110,7 @@ class App extends Component {
   }
 
   startTimer() {
-    const timerJustStarted = this.state.numberOfSprints === this.state.sprintsRemaining
+    const timerJustStarted = this.state.cycleType === "idle"
     if (timerJustStarted) {
       this.switchToWork();
     }

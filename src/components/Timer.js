@@ -34,7 +34,7 @@ class Timer extends Component {
     return(
       <div>
       <h1 className="timer__title">Pomodoro Timer!</h1>
-      <h2>{this.displayCycleType()}</h2>
+      <h3>{this.displayCycleType()}</h3>
       <h3 className="timer__clock">{this.time()}</h3>
       </div>
     );
