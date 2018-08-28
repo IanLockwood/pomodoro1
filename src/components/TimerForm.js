@@ -42,6 +42,7 @@ class TimerForm extends Component {
             type="number"
             step="1"
             min="1"
+            max="99"
             defaultValue="4"
             onChange={this.handleNumberOfSprintsChange}
           >
@@ -56,6 +57,7 @@ class TimerForm extends Component {
             type="number"
             step="1"
             min="1"
+            max="999"
             defaultValue="25"
             onChange={this.handleSprintChange}
           >
@@ -70,6 +72,7 @@ class TimerForm extends Component {
             type="number"
             step="1"
             min="1"
+            max="999"
             defaultValue="5"
             onChange={this.handleBreakChange}
           >
@@ -84,6 +87,7 @@ class TimerForm extends Component {
             type="number"
             step="1"
             min="1"
+            max="999"
             defaultValue="15"
             onChange={this.handleRestChange}
           >

@@ -1,6 +1,12 @@
 .timer__clock {
-  font-size: 10rem;
+  font-size: 8rem;
   margin: 2rem auto;
+}
+
+@media screen and (min-width: 700px) {
+  .timer__clock {
+    font-size: 10rem;
+  }
 }
 
 .timer__title {

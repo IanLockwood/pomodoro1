@@ -4,7 +4,9 @@ import TimerForm from './TimerForm'
 import StartButton from './StartButton'
 import PauseButton from './PauseButton'
 import StopButton from './StopButton'
+import InfoBlock from './InfoBlock'
 import '../css/App.css';
+import '../css/Button.css';
 
 class App extends Component {
   constructor(props) {
@@ -12,13 +14,15 @@ class App extends Component {
 
     this.state = {
       numberOfSprints: 4,
-      sprintLength: 0.05,
-      breakLength: 0.05,
-      restLength: 0.05,
+      sprintLength: 25,
+      breakLength: 5,
+      restLength: 15,
       timeRemaining: 0,
       sprintsRemaining: 4,
-      cycleType: '',
-      intervalId: null
+      cycleType: 'idle',
+      intervalId: null,
+      isRunning: false,
+      isPaused: false
     }
 
     this.customizeNumberOfSprints = this.customizeNumberOfSprints.bind(this);
@@ -69,18 +73,6 @@ class App extends Component {
     }
   }
 
-  timerInterval = () => {
-    console.log(this.state.numberOfSprints)
-    if (this.state.timeRemaining === 0) {
-      this.switchCycle();
-    } else {
-      // count down timer
-      this.setState(prevState => (
-        {timeRemaining: prevState.timeRemaining - 1}
-      ));
-    }
-  }
-
   customizeNumberOfSprints(customNumberOfSprints) {
     this.setState({
       numberOfSprints: customNumberOfSprints,
@@ -106,18 +98,35 @@ class App extends Component {
     })
   }
 
+  timerInterval = () => {
+    if (this.state.timeRemaining === 0) {
+      this.switchCycle();
+    } else {
+      // count down timer
+      this.setState(prevState => (
+        {timeRemaining: prevState.timeRemaining - 1}
+      ));
+    }
+  }
+
   startTimer() {
     const timerJustStarted = this.state.numberOfSprints === this.state.sprintsRemaining
     if (timerJustStarted) {
       this.switchToWork();
     }
     this.setState({
-      intervalId: window.setInterval(this.timerInterval, 1000)
+      intervalId: window.setInterval(this.timerInterval, 1000),
+      isRunning: true,
+      isPaused: false
     });
   }
 
   pauseTimer() {
     clearInterval(this.state.intervalId);
+    this.setState({
+      isRunning: false,
+      isPaused: true
+    })
   }
 
   stopTimer() {
@@ -125,30 +134,56 @@ class App extends Component {
     this.setState({
       timeRemaining: 0,
       sprintsRemaining: this.state.numberOfSprints,
-      cycleType: '',
-      intervalId: null
+      cycleType: 'idle',
+      intervalId: null,
+      isRunning: false,
+      isPaused: false
     })
+  }
+
+  renderControls() {
+    if (this.state.isRunning) {
+      return (
+        <div className="app__controls">
+          <PauseButton pauseTimer={this.pauseTimer} />
+          <StopButton stopTimer={this.stopTimer} />
+        </div>
+      );
+    }
+    else if (this.state.isPaused) {
+      return (
+        <div className="app__controls">
+          <StartButton startTimer={this.startTimer} />
+          <StopButton stopTimer={this.stopTimer} />
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="app__controls">
+          <TimerForm
+            customizeNumberOfSprints={this.customizeNumberOfSprints}
+            customizeSprintLength={this.customizeSprintLength}
+            customizeBreakLength={this.customizeBreakLength}
+            customizeRestLength={this.customizeRestLength}
+          />
+          <StartButton startTimer={this.startTimer} />
+        </div>
+      );
+    }
   }
 
   render() {
     return (
-      <div className={"app app--" + this.state.cycleType}>
+      <div className={this.state.isPaused ? "app app--paused" : "app app--" + this.state.cycleType}>
         <Timer timeRemaining={this.state.timeRemaining}
           cycleType={this.state.cycleType}
           numberOfSprints={this.state.numberOfSprints}
           sprintsRemaining={this.state.sprintsRemaining}
         />
 
-        <TimerForm
-          customizeNumberOfSprints={this.customizeNumberOfSprints}
-          customizeSprintLength={this.customizeSprintLength}
-          customizeBreakLength={this.customizeBreakLength}
-          customizeRestLength={this.customizeRestLength}
-        />
-
-        <StartButton startTimer={this.startTimer} />
-        <PauseButton pauseTimer={this.pauseTimer} />
-        <StopButton stopTimer={this.stopTimer}/>
+        {this.renderControls()}
+        <InfoBlock />
       </div>
     );
   }

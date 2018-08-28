@@ -1,0 +1,21 @@
+.button {
+  font-size: 2rem;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+  width: 10rem;
+  margin: 0 0.5rem;
+}
+
+.button--start {
+  background-color: #228B22;
+}
+
+.button--pause {
+  background-color: #DFD712;
+}
+
+.button--stop {
+  background-color: #800020;
+}

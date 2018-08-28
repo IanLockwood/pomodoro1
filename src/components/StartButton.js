@@ -13,7 +13,7 @@ class StartButton extends Component {
 
   render() {
     return (
-      <button onClick={this.handleClick}>Start!</button>
+      <button onClick={this.handleClick} className="button button--start">Start</button>
     );
   }
 }

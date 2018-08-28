@@ -13,7 +13,7 @@ class PauseButton extends Component {
 
   render() {
     return (
-      <button onClick={this.handleClick}>Pause</button>
+      <button onClick={this.handleClick} className="button button--pause">Pause</button>
     );
   }
 }
