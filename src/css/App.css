@@ -21,6 +21,7 @@ h1 {
 .app {
   height: 100%;
   padding: 0 2rem;
+  background-color: #fcf5e8;
 }
 
 .app--work,
